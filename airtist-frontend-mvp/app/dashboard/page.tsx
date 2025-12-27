@@ -7,6 +7,7 @@ import Link from 'next/link'
 export default function Dashboard() {
   const router = useRouter()
   const [username, setUsername] = useState('')
+  const [activeTab, setActiveTab] = useState('create') // 'create' | 'search'
 
   useEffect(() => {
     const logged = sessionStorage.getItem('logged')
@@ -48,123 +49,188 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {/* CENTRO */}
-      <div className="flex-1 flex items-center justify-center px-6">
+      {/* ABAS */}
+      <div className="w-full flex justify-center px-4 pt-4 border-b border-zinc-800/60">
+        <nav
+          className="
+            relative inline-flex items-center gap-1
+            rounded-full border border-zinc-800
+            bg-zinc-900/80
+            px-1 py-1
+            shadow-[0_0_40px_-20px_rgba(168,85,247,0.4)]
+          "
+        >
+          {/* ABA CRIAR MODELOS */}
+          <button
+            type="button"
+            onClick={() => setActiveTab('create')}
+            className={`
+              relative rounded-full px-5 py-2
+              text-xs sm:text-sm font-medium
+              flex items-center gap-2
+              transition-all duration-200
+              ${activeTab === 'create'
+                ? 'bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white shadow-[0_0_25px_rgba(168,85,247,0.7)] scale-[1.02]'
+                : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/80'
+              }
+            `}
+          >
+            <span className="text-base">✨</span>
+            <span>Criar modelos</span>
+          </button>
 
-        <div className="
-          w-full max-w-4xl
-          bg-zinc-900/60 backdrop-blur-xl
-          border border-zinc-800
-          rounded-3xl p-10
-          shadow-[0_0_80px_-20px_rgba(168,85,247,0.25)]
-        ">
+          {/* ABA BUSCAR MODELOS */}
+          <button
+            type="button"
+            onClick={() => setActiveTab('search')}
+            className={`
+              relative rounded-full px-5 py-2
+              text-xs sm:text-sm font-medium
+              flex items-center gap-2
+              transition-all duration-200
+              ${activeTab === 'search'
+                ? 'bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white shadow-[0_0_25px_rgba(168,85,247,0.7)] scale-[1.02]'
+                : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/80'
+              }
+            `}
+          >
+            <span className="text-base">🔍</span>
+            <span>Buscar modelos</span>
+          </button>
+        </nav>
+      </div>
 
-          <h2 className="
-            text-2xl font-semibold text-center mb-2
+      {/* CONTEÚDO CENTRAL */}
+      <div className="flex-1 flex items-center justify-center px-6 pb-10">
+
+        {/* ABA CRIAR MODELOS */}
+        {activeTab === 'create' && (
+          <div className="
+            w-full max-w-4xl
+            bg-zinc-900/60 backdrop-blur-xl
+            border border-zinc-800
+            rounded-3xl p-10
+            shadow-[0_0_80px_-20px_rgba(168,85,247,0.25)]
           ">
-            Criar novo modelo
-          </h2>
+            <h2 className="text-2xl font-semibold text-center mb-2">
+              Criar novo modelo
+            </h2>
 
-          <p className="
-            text-center text-zinc-400 mb-10
-          ">
-            Escolha o tipo de IA que deseja criar
-          </p>
+            <p className="text-center text-zinc-400 mb-10">
+              Escolha o tipo de IA que deseja criar
+            </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* ESCRITA */}
+              <Link
+                href="/dashboard/models/writing"
+                className="
+                  group relative overflow-hidden
+                  rounded-2xl p-6
+                  border border-zinc-800
+                  bg-zinc-950
+                  transition-all duration-300
+                  hover:-translate-y-1
+                  hover:border-purple-500/70
+                "
+              >
+                <div className="
+                  absolute inset-0 opacity-0 group-hover:opacity-100
+                  bg-gradient-to-br from-purple-500/10 to-transparent
+                  transition
+                " />
 
-            {/* ESCRITA */}
-            <Link
-              href="/dashboard/models/writing"
-              className="
-                group relative overflow-hidden
-                rounded-2xl p-6
-                border border-zinc-800
-                bg-zinc-950
-                transition-all duration-300
-                hover:-translate-y-1
-                hover:border-purple-500/70
-              "
-            >
-              <div className="
-                absolute inset-0 opacity-0 group-hover:opacity-100
-                bg-gradient-to-br from-purple-500/10 to-transparent
-                transition
-              " />
+                <div className="relative space-y-3">
+                  <div className="text-4xl">✍️</div>
+                  <h3 className="text-lg font-medium">
+                    IA de Escrita
+                  </h3>
+                  <p className="text-sm text-zinc-400">
+                    Letras, poemas e textos artísticos
+                  </p>
+                </div>
+              </Link>
 
-              <div className="relative space-y-3">
-                <div className="text-4xl">✍️</div>
-                <h3 className="text-lg font-medium">
-                  IA de Escrita
-                </h3>
-                <p className="text-sm text-zinc-400">
-                  Letras, poemas e textos artísticos
-                </p>
-              </div>
-            </Link>
+              {/* IMAGEM */}
+              <Link
+                href="/dashboard/models/image"
+                className="
+                  group relative overflow-hidden
+                  rounded-2xl p-6
+                  border border-zinc-800
+                  bg-zinc-950
+                  transition-all duration-300
+                  hover:-translate-y-1
+                  hover:border-pink-500/70
+                "
+              >
+                <div className="
+                  absolute inset-0 opacity-0 group-hover:opacity-100
+                  bg-gradient-to-br from-pink-500/10 to-transparent
+                  transition
+                " />
 
-            {/* IMAGEM */}
-            <Link
-              href="/dashboard/models/image"
-              className="
-                group relative overflow-hidden
-                rounded-2xl p-6
-                border border-zinc-800
-                bg-zinc-950
-                transition-all duration-300
-                hover:-translate-y-1
-                hover:border-pink-500/70
-              "
-            >
-              <div className="
-                absolute inset-0 opacity-0 group-hover:opacity-100
-                bg-gradient-to-br from-pink-500/10 to-transparent
-                transition
-              " />
+                <div className="relative space-y-3">
+                  <div className="text-4xl">🎨</div>
+                  <h3 className="text-lg font-medium">
+                    IA de Imagem
+                  </h3>
+                  <p className="text-sm text-zinc-400">
+                    Arte visual e estilos únicos
+                  </p>
+                </div>
+              </Link>
 
-              <div className="relative space-y-3">
-                <div className="text-4xl">🎨</div>
-                <h3 className="text-lg font-medium">
-                  IA de Imagem
-                </h3>
-                <p className="text-sm text-zinc-400">
-                  Arte visual e estilos únicos
-                </p>
-              </div>
-            </Link>
+              {/* INSTRUMENTAL */}
+              <Link
+                href="/dashboard/models/instrumental"
+                className="
+                  group relative overflow-hidden
+                  rounded-2xl p-6
+                  border border-zinc-800
+                  bg-zinc-950
+                  transition-all duration-300
+                  hover:-translate-y-1
+                  hover:border-indigo-500/70
+                "
+              >
+                <div className="
+                  absolute inset-0 opacity-0 group-hover:opacity-100
+                  bg-gradient-to-br from-indigo-500/10 to-transparent
+                  transition
+                " />
 
-            {/* INSTRUMENTAL */}
-            <Link
-              href="/dashboard/models/instrumental"
-              className="
-                group relative overflow-hidden
-                rounded-2xl p-6
-                border border-zinc-800
-                bg-zinc-950
-                transition-all duration-300
-                hover:-translate-y-1
-                hover:border-indigo-500/70
-              "
-            >
-              <div className="
-                absolute inset-0 opacity-0 group-hover:opacity-100
-                bg-gradient-to-br from-indigo-500/10 to-transparent
-                transition
-              " />
-
-              <div className="relative space-y-3">
-                <div className="text-4xl">🎧</div>
-                <h3 className="text-lg font-medium">
-                  IA Instrumental
-                </h3>
-                <p className="text-sm text-zinc-400">
-                  Beats, trilhas e atmosferas
-                </p>
-              </div>
-            </Link>
-
+                <div className="relative space-y-3">
+                  <div className="text-4xl">🎧</div>
+                  <h3 className="text-lg font-medium">
+                    IA Instrumental
+                  </h3>
+                  <p className="text-sm text-zinc-400">
+                    Beats, trilhas e atmosferas
+                  </p>
+                </div>
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* ABA BUSCAR MODELOS (vazia por enquanto) */}
+        {activeTab === 'search' && (
+          <div className="
+            w-full max-w-4xl
+            bg-zinc-900/60 backdrop-blur-xl
+            border border-zinc-800
+            rounded-3xl p-10
+          ">
+            <h2 className="text-2xl font-semibold text-center mb-2">
+              Buscar modelos
+            </h2>
+            <p className="text-center text-zinc-500 text-sm">
+              Em breve você poderá pesquisar modelos já criados aqui.
+            </p>
+          </div>
+        )}
+
       </div>
     </main>
   )
