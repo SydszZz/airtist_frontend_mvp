@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     async function checkAuth() {
-      const { data, error } = await supabase.auth.getSession()
+      const { data } = await supabase.auth.getSession()
 
       if (!data.session) {
         router.replace('/login')
@@ -66,10 +66,16 @@ export default function Dashboard() {
 
       {/* ABAS */}
       <div className="w-full flex justify-center px-4 pt-4 border-b border-zinc-800/60">
-        <nav className="inline-flex gap-1 rounded-full border border-zinc-800 bg-zinc-900/80 px-1 py-1">
+        <nav className="
+          relative inline-flex items-center gap-1
+          rounded-full border border-zinc-800
+          bg-zinc-900/80
+          px-1 py-1
+        ">
           <button
             onClick={() => setActiveTab('create')}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition
+            className={`
+              rounded-full px-5 py-2 text-sm font-medium transition
               ${activeTab === 'create'
                 ? 'bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white'
                 : 'text-zinc-400 hover:text-white'}
@@ -80,7 +86,8 @@ export default function Dashboard() {
 
           <button
             onClick={() => setActiveTab('search')}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition
+            className={`
+              rounded-full px-5 py-2 text-sm font-medium transition
               ${activeTab === 'search'
                 ? 'bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white'
                 : 'text-zinc-400 hover:text-white'}
@@ -91,19 +98,102 @@ export default function Dashboard() {
         </nav>
       </div>
 
-      {/* CONTEÚDO */}
+      {/* CONTEÚDO CENTRAL */}
       <div className="flex-1 flex items-center justify-center px-6 pb-10">
+
+        {/* CRIAR MODELOS */}
         {activeTab === 'create' && (
-          <div className="w-full max-w-4xl">
-            {/* conteúdo */}
+          <div className="
+            w-full max-w-4xl
+            bg-zinc-900/60 backdrop-blur-xl
+            border border-zinc-800
+            rounded-3xl p-10
+          ">
+            <h2 className="text-2xl font-semibold text-center mb-2">
+              Criar novo modelo
+            </h2>
+
+            <p className="text-center text-zinc-400 mb-10">
+              Escolha o tipo de IA que deseja criar
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+              {/* ESCRITA */}
+              <Link
+                href="/dashboard/models/writing"
+                className="
+                  group rounded-2xl p-6
+                  border border-zinc-800 bg-zinc-950
+                  transition hover:-translate-y-1 hover:border-purple-500/70
+                "
+              >
+                <div className="space-y-3">
+                  <div className="text-4xl">✍️</div>
+                  <h3 className="text-lg font-medium">IA de Escrita</h3>
+                  <p className="text-sm text-zinc-400">
+                    Letras, poemas e textos artísticos
+                  </p>
+                </div>
+              </Link>
+
+              {/* IMAGEM */}
+              <Link
+                href="/dashboard/models/image"
+                className="
+                  group rounded-2xl p-6
+                  border border-zinc-800 bg-zinc-950
+                  transition hover:-translate-y-1 hover:border-pink-500/70
+                "
+              >
+                <div className="space-y-3">
+                  <div className="text-4xl">🎨</div>
+                  <h3 className="text-lg font-medium">IA de Imagem</h3>
+                  <p className="text-sm text-zinc-400">
+                    Arte visual e estilos únicos
+                  </p>
+                </div>
+              </Link>
+
+              {/* INSTRUMENTAL */}
+              <Link
+                href="/dashboard/models/instrumental"
+                className="
+                  group rounded-2xl p-6
+                  border border-zinc-800 bg-zinc-950
+                  transition hover:-translate-y-1 hover:border-indigo-500/70
+                "
+              >
+                <div className="space-y-3">
+                  <div className="text-4xl">🎧</div>
+                  <h3 className="text-lg font-medium">IA Instrumental</h3>
+                  <p className="text-sm text-zinc-400">
+                    Beats, trilhas e atmosferas
+                  </p>
+                </div>
+              </Link>
+
+            </div>
           </div>
         )}
 
+        {/* BUSCAR MODELOS */}
         {activeTab === 'search' && (
-          <div className="w-full max-w-4xl text-zinc-400">
-            Em breve...
+          <div className="
+            w-full max-w-4xl
+            bg-zinc-900/60 backdrop-blur-xl
+            border border-zinc-800
+            rounded-3xl p-10
+          ">
+            <h2 className="text-2xl font-semibold text-center mb-2">
+              Buscar modelos
+            </h2>
+            <p className="text-center text-zinc-500 text-sm">
+              Em breve você poderá pesquisar modelos aqui.
+            </p>
           </div>
         )}
+
       </div>
     </main>
   )
